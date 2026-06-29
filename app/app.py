@@ -162,46 +162,64 @@ if not _check_login():
 st.markdown(
     """
     <style>
-      /* Aggressively kill all Streamlit chrome so the dashboard goes edge-to-edge */
+      /* Aggressively kill all Streamlit chrome so the dashboard goes edge-to-edge.
+         Selectors cover both the legacy classes and the current
+         data-testid hooks (Streamlit >= 1.5x renamed several of these). */
       [data-testid="stAppViewContainer"]   { padding: 0 !important; }
-      [data-testid="stHeader"]             { display: none !important; }
+      [data-testid="stHeader"], header[data-testid="stHeader"] {
+        display: none !important; height: 0 !important;
+      }
       [data-testid="stToolbar"]            { display: none !important; }
       [data-testid="stDecoration"]         { display: none !important; }
+      [data-testid="stStatusWidget"]       { display: none !important; }
       [data-testid="stMain"]               { padding: 0 !important; }
-      [data-testid="stMainBlockContainer"] { padding: 0 !important; max-width: 100% !important; }
+      [data-testid="stMainBlockContainer"],
+      .stMainBlockContainer,
+      .main .block-container,
+      .block-container {
+        padding: 0 !important; margin: 0 !important; max-width: 100% !important;
+      }
+      [data-testid="stVerticalBlock"]      { gap: 0 !important; }
+      [data-testid="stElementContainer"]   { margin: 0 !important; }
       [data-testid="stSidebar"]            { display: none !important; }
-      .main .block-container               { padding: 0 !important; max-width: 100% !important; }
       .stApp > header                      { display: none !important; }
-      footer, [data-testid="stStatusWidget"] { display: none !important; }
+      footer                               { display: none !important; }
       .stApp { background: #f8fafc; }
 
-      /* Floating logout button — sits over the dashboard's top-right corner */
-      .stButton {
+      /* Floating logout button — compact translucent pill that sits over the
+         dark header's top-right corner (header has matching right-padding so
+         it never covers the "Top: …" badge). */
+      [data-testid="stButton"], .stButton {
         position: fixed !important;
-        top: 10px !important;
-        right: 14px !important;
-        z-index: 9999 !important;
+        top: 11px !important;
+        right: 16px !important;
+        width: auto !important;
+        z-index: 100000 !important;
         margin: 0 !important;
       }
-      .stButton button {
-        padding: 4px 14px !important;
+      [data-testid="stButton"] button, .stButton button {
+        padding: 5px 14px !important;
+        min-height: 0 !important;
         font-size: 12px !important;
+        line-height: 1.3 !important;
         border-radius: 8px !important;
-        background: rgba(255,255,255,0.9) !important;
+        background: rgba(255,255,255,0.10) !important;
         backdrop-filter: blur(6px) !important;
-        color: #0f172a !important;
-        border: 1px solid rgba(15,23,42,0.18) !important;
-        box-shadow: 0 2px 8px rgba(15,23,42,0.12) !important;
+        color: #e2e8f0 !important;
+        border: 1px solid rgba(255,255,255,0.28) !important;
+        box-shadow: 0 2px 8px rgba(15,23,42,0.20) !important;
         font-weight: 500 !important;
       }
-      .stButton button:hover {
-        background: #fff !important;
-        border-color: rgba(15,23,42,0.32) !important;
+      [data-testid="stButton"] button:hover, .stButton button:hover {
+        background: rgba(255,255,255,0.20) !important;
+        border-color: rgba(255,255,255,0.50) !important;
+        color: #ffffff !important;
       }
 
       /* Make the embedded iframe fill the viewport */
       iframe { width: 100% !important; height: 100vh !important; border: 0 !important; display: block !important; }
       [data-testid="stIFrameResizerAnchor"] { display: none !important; }
+      [data-testid="stCustomComponentV1"] { width: 100% !important; height: 100vh !important; }
       .element-container:has(iframe) { padding: 0 !important; margin: 0 !important; }
     </style>
     """,
