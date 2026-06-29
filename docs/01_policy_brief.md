@@ -123,9 +123,12 @@ fresh examples.
 
 On the 2026 test data (which the model never saw during training):
 
-- The per-case classifier correctly **agrees with the official "minority-
- targeted" label 89.5% of the time** when its confidence is above 50%
- (its precision at threshold 0.5).
+- The per-case classifier ranks cases well on held-out 2026 test data
+ (**ROC AUC 0.84**) and **catches about 93% of the cases that were truly
+ minority-targeted** (recall). Because such cases are rare it casts a wide
+ net, so only a minority of everything it flags is targeted — about **1 in
+ 5 of its top-ranked cases** (precision@20), several times the base rate.
+ It is a triage aid a human reviews, not an autonomous decider.
 - The early-warning forecaster, when it ranks all 656 Punjab police
  stations by 30-day risk, picks **about 18× more true high-risk areas
  than random guessing would** in its top-50 list.

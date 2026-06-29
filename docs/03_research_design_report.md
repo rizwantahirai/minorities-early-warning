@@ -336,7 +336,7 @@ Per the methodology, we set three thresholds before we started training:
 |---|---|---|
 | Logistic Regression baseline | ROC AUC ≥ 0.65 | **0.841** (per-case) / **0.715** (PS-week) — both pass |
 | Random Forest | ROC AUC ≥ 0.75 AND Precision@20 ≥ 0.30 | **0.814 + 0.35** — passes |
-| Fairness check | No community AUC < 0.55 (where evaluable) | Passes for Christian / Ahmadi / Hindu |
+| Fairness check | No community AUC < 0.55 (where evaluable) | Passes where evaluable (Christian, n=213). Ahmadi (n=10) and Hindu (n=11) also pass but their samples are too small to be reliable. |
 | Prophet volume forecaster | MAPE < 20% on Punjab | **9.54%** — comfortably passes |
 
 The system meets all the success thresholds set at design time.

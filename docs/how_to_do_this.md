@@ -1798,9 +1798,19 @@ grain (Stage 4).
 
 We used the same Logistic Regression + Random Forest pair, fit on
 the **PS-week training table** from Stage 4. We chose LR as the
-deployed forecaster because on this dataset it gave better
-**calibration** (its predicted probabilities were closer to actual
-frequencies — see calibration concept below).
+deployed forecaster because Random Forest collapses on the sparse
+positive class (it pushes almost no mass to "yes"), while LR ranks the
+police stations far better.
+
+> **Calibration caveat.** LR ranks well, but its *raw* output is **not a
+> well-calibrated probability** at this grain: because the model is
+> trained with balanced class weights on a ~0.75%-rate event, it emits an
+> average "probability" near 0.58. Treat the forecaster's number as a
+> **risk ranking, not a literal probability**. A monotonic re-fit
+> (isotonic regression) brings the scores back in line with observed
+> frequencies (calibration error drops ~30×) if a true probability is
+> ever needed — but it does not change the ranking, so the top-N
+> early-warning list is unaffected.
 
 ### Train
 
