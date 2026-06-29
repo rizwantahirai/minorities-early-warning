@@ -237,6 +237,10 @@
     color:#64748b;
     text-transform:uppercase; letter-spacing:0.08em;
   }
+  /* Fixed-height, relatively-positioned box so Chart.js (responsive +
+     maintainAspectRatio:false) sizes the canvas to a sane height instead
+     of stretching to fill the scrolling sidebar. */
+  .chart-box { position:relative; width:100%; height:200px; }
 
   /* ---------- Legend on map ---------- */
   .legend {
@@ -369,11 +373,11 @@
       <ul id="ps-list"></ul>
       <div class="chart-wrap">
         <h4>Trend over time</h4>
-        <canvas id="trend-chart" height="180"></canvas>
+        <div class="chart-box"><canvas id="trend-chart"></canvas></div>
       </div>
       <div class="chart-wrap">
         <h4>By community</h4>
-        <canvas id="comm-chart" height="180"></canvas>
+        <div class="chart-box"><canvas id="comm-chart"></canvas></div>
       </div>
     </aside>
   </div>
